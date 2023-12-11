@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atv Pix</title>
+</head>
+<body>
+<script>
+  const contas = [];
+
+  function abrirConta() {
+    const cpf = prompt("Digite o CPF:");
+    const nome = prompt("Digite o nome:");
+    const saldoInicial = parseFloat(prompt("Digite o saldo inicial (opcional):") || 0);
+
+    const chavePix = cpf;
+    const conta = { cpf, nome, chavePix, saldo: saldoInicial };
+    contas.push(conta);
+
+    alert(`Conta foi criada`);
+}
+
+function verSaldo(cpf) {
+  const conta = contas.find(conta => conta.cpf === cpf);
+  if (conta) {
+    return conta.saldo;
+  } else {
+    return null;
+  }
+}
+
+function pix() {
+  const cpfOrigem = prompt("Digite seu cpf")
+  const cpfDestino= prompt("Digite a chave pix (cpf) da pessoa")
+  const valor = parseInt(prompt("Valor a tranferir"))
+
+  const conOrigem = contas.find(conta => conta.cpf === cpfOrigem);
+  const conDestino = contas.find(conta => conta.cpf === cpfDestino);
+
+  if (conOrigem && conDestino) {
+    if (conOrigem.saldo >= valor) {
+      conOrigem.saldo -= valor;
+      conDestino.saldo += valor;
+      alert(`Transferência PIX de ${valor} de ${conOrigem.nome} para ${conDestino.nome} realizada com sucesso.`)
+    } else {
+      alert(`Saldo insuficiente na conta de ${conOrigem.nome}.`)
+    }
+  } else {
+    alert(`Conta de origem ou destino não encontrada.`)
+  }
+}
+let pergunta = parseInt(prompt("O que você deseja: \n [ 0 ] - Criar uma conta \n [ 1 ] - Realizar um pix \n [ 2 ] - Sair"))
+
+while (pergunta == 0){
+  abrirConta()
+  pergunta = parseInt(prompt("O que você deseja: \n [ 0 ] - Criar uma conta \n [ 1 ] - Realizar um pix \n [ 2 ] - Sair"))
+}
+while (pergunta == 1){
+  pix()
+  pergunta = parseInt(prompt("O que você deseja: \n [ 0 ] - Criar uma conta \n [ 1 ] - Realizar um pix \n [ 2 ] - Sair"))
+}
+</script>
+
+</body>
+</html>
+
